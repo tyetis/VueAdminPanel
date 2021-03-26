@@ -14,9 +14,10 @@
                         <router-link to="/about" custom v-slot="{ href, route, navigate, isActive }">
                             <b-nav-item :active="isActive" :href="href" @click="navigate">About</b-nav-item>
                         </router-link>
-                        <router-link to="/login" custom v-slot="{ href, route, navigate, isActive }">
+                        <router-link to="/login" custom v-slot="{ href, route, navigate, isActive }" v-if="!isLoggedIn">
                             <b-nav-item :active="isActive" :href="href" @click="navigate">Login</b-nav-item>
                         </router-link>
+                        <li class="nav-item"><a href="#" class="nav-link" @click="logout" v-if="isLoggedIn">Logout</a></li>
                     </b-navbar-nav>
                     <b-navbar-nav class="ml-auto">
                         <b-nav-item-dropdown right>
@@ -35,5 +36,21 @@
     </div>
 </template>
 <script>
-
+    export default {
+        name: 'Layout',
+        created: function () {
+            console.log(this.$store.token);
+        },
+        computed: {
+            isLoggedIn: function () { return this.$store.getters.isLoggedIn }
+        },
+        methods: {
+            logout: function () {
+                this.$store.dispatch('logout')
+                    .then(() => {
+                        this.$router.push('/login')
+                    })
+            }
+        }
+    }
 </script>

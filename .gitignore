@@ -21,3 +21,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+/.vs/ProjectSettings.json
+/.vs
+/serve.bat
