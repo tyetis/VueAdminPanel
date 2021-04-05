@@ -1,25 +1,32 @@
 ﻿<template>
-    <div>
-        <b>Here is login</b>
-        <form @submit="handleSubmit" method="post" ref="form">
-            <b-form-group id="input-group-1"
-                          label="UserName:"
-                          label-for="input-1"
-                          description="We'll never share your email with anyone else.">
-                <b-form-input id="input-1"
-                              v-model="username"
-                              type="text"
-                              placeholder="User Name" required></b-form-input>
-            </b-form-group>
+    <b-container class="bv-example-row">
+        <b-row>
+            <b-col cols="4"></b-col>
+            <b-col cols="4">
+                <br /><br />
+                <b>Here is login</b>
+                <b-form @submit="handleSubmit" method="post" ref="form">
+                    <b-form-group id="input-group-1"
+                                  label="Email:"
+                                  label-for="input-1"
+                                  description="We'll never share your email with anyone else.">
+                        <b-form-input id="input-1"
+                                      v-model="email"
+                                      type="text"
+                                      placeholder="User Email" required></b-form-input>
+                    </b-form-group>
 
-            <b-form-group id="input-group-2" label="Email:" label-for="input-2">
-                <b-form-input id="input-2"
-                              v-model="email"
-                              placeholder="Enter Email" required></b-form-input>
-            </b-form-group>
-            <button type="submit">Login</button>
-        </form>
-    </div>
+                    <b-form-group id="input-group-2" label="Password:" label-for="input-2">
+                        <b-form-input id="input-2"
+                                      v-model="password"
+                                      placeholder="Enter Password" required></b-form-input>
+                    </b-form-group>
+                    <b-button type="submit" variant="primary">Login</b-button>
+                </b-form>
+            </b-col>
+            <b-col cols="4"></b-col>
+        </b-row>
+    </b-container>
 </template>
 <script>
     export default {
@@ -27,15 +34,15 @@
         methods: {
             handleSubmit(e) {
                 e.preventDefault();
-                this.$store.dispatch("login", { name: this.username, email: this.email })
+                this.$store.dispatch("login", { email: this.email, password: this.password })
                     .then(() => this.$router.push('/'))
-                    .catch(err => console.log(err));
+                    .catch(err => alert(err));
             }
         },
         data: function () {
             return {
-                username: "",
-                email: ""
+                email: "",
+                password: ""
             }
         }
     }

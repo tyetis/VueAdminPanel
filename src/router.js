@@ -17,12 +17,14 @@ const routes = [
             {
                 path: '/users',
                 name: 'Users',
-                component: () => import('./pages/Users.vue')
+                component: () => import('./pages/Users.vue'),
+                meta: { requiresAuth: true }
             },
             {
                 path: '/user/:id',
                 name: 'User',
-                component: () => import('./pages/User.vue')
+                component: () => import('./pages/User.vue'),
+                meta: { requiresAuth: true }
             },
             {
                 path: '/about',

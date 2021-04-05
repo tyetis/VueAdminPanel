@@ -24,3 +24,6 @@ pnpm-debug.log*
 /.vs/ProjectSettings.json
 /.vs
 /serve.bat
+/VueWebApi/VueWebApi/bin/Debug/netcoreapp3.1
+/VueWebApi/VueWebApi/obj
+/VueWebApi/.vs/VueWebApi

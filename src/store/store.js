@@ -10,7 +10,8 @@ const store = new Vuex.Store({
     state: {
         users: [],
         status: '',
-        token: localStorage.getItem('token') || ''
+        token: localStorage.getItem('token') || '',
+        user: {}
     },
     mutations,
     actions,

@@ -2,7 +2,7 @@
     <div>
         <br />
         <br />
-        <b-button @click="ShowEditModal" class="btn btn-success">New User</b-button>
+        <b-button @click="ShowEditModal({})" class="btn btn-success">New User</b-button>
         <br />
         <br />
         <b-table bordered :current-page="currentPage" :per-page="perPage" hover show-empty fixed :items="users" :fields="fields">
@@ -10,13 +10,13 @@
                 {{ data.value.toString().substring(0, 20) }}
             </template>
             <template #cell(actions)="row">
-                <b-button size="sm" variant="primary" @click="ShowEditModal(row.item, row.index, $event.target)" class="mr-1">
+                <b-button size="sm" variant="primary" @click="ShowEditModal(row.item)" class="mr-1">
                     Edit
                 </b-button>
                 <b-button size="sm" variant="info" @click="GoUserDetail(row.item.id)">
                     Details
                 </b-button>
-                <b-button size="sm" variant="danger" @click="ConfirmDelete">
+                <b-button size="sm" variant="danger" @click="ConfirmDelete(row.item)">
                     Delete
                 </b-button>
             </template>
@@ -50,10 +50,9 @@
             return {
                 fields: [
                     "name",
-                    "username",
                     "email",
-                    "address",
-                    "phone",
+                    "password",
+                    "createDate",
                     "actions"
                 ],
                 currentPage: 1,
@@ -64,12 +63,13 @@
             ShowEditModal(item) {
                 this.$refs.EditUserForm.show(item);
             },
-            ConfirmDelete() {
+            ConfirmDelete(item) {
                 this.$bvModal.msgBoxConfirm('Please confirm that you want to delete everything.', {
                     title: 'Please Confirm', size: 'md', buttonSize: 'md',
                     okVariant: 'danger', okTitle: 'YES', cancelTitle: 'NO'
                 }).then(value => {
-                    alert(value);
+                    if (value)
+                        this.$store.dispatch("deleteUser", item);
                 }).catch();
             },
             GoUserDetail(id) {

@@ -19,14 +19,14 @@
                         </router-link>
                         <li class="nav-item"><a href="#" class="nav-link" @click="logout" v-if="isLoggedIn">Logout</a></li>
                     </b-navbar-nav>
-                    <b-navbar-nav class="ml-auto">
+                    <b-navbar-nav class="ml-auto" v-if="isLoggedIn">
                         <b-nav-item-dropdown right>
                             <!-- Using 'button-content' slot -->
                             <template #button-content>
-                                <em>User</em>
+                                <em>{{isLoggedIn && user ? user.name : ""}}</em>
                             </template>
                             <b-dropdown-item href="#">Profile</b-dropdown-item>
-                            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                            <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                 </b-collapse>
@@ -36,13 +36,19 @@
     </div>
 </template>
 <script>
+    import { mapState } from 'vuex'
+
     export default {
         name: 'Layout',
         created: function () {
-            console.log(this.$store.token);
+            if (this.isLoggedIn)
+                this.$store.dispatch("getAccountInfo");
         },
         computed: {
-            isLoggedIn: function () { return this.$store.getters.isLoggedIn }
+            isLoggedIn: function () { return this.$store.getters.isLoggedIn },
+            ...mapState([
+                'user'
+            ])
         },
         methods: {
             logout: function () {
